@@ -24,6 +24,29 @@ This project implements several **rendering pipelines** based on **rasterization
     * drag and drop the file flowers_1.ply into the app viewport
 3. Happy splatting!
 
+## Building from Source
+
+The project uses CMake and requires a compiler with C++20 support. Configure and build a Release version with:
+
+```sh
+cmake -DCMAKE_BUILD_TYPE=Release -S . -B build
+cmake --build build --config Release
+```
+
+During configuration, CMake may download required dependencies and sample assets:
+
+* `nvpro_core2` is found next to the project, in the source tree, or under `build/_deps`; if it is not found, `cmake/FindNvproCore2.cmake` downloads it automatically when `NVPROCORE2_DOWNLOAD` is enabled.
+* The default Bouquet of Flowers scene (`flowers_1.zip`) is downloaded and extracted unless `DISABLE_DEFAULT_SCENE=ON` is set.
+* Test mesh assets such as `armadillo.obj`, `teapot.obj`, and related OBJ files are downloaded unless `DISABLE_MESH_ASSETS_DOWNLOAD=ON` is set.
+* DLSS support is enabled by default through `USE_DLSS=ON`; the NGX/DLSS dependency is resolved through the nvpro_core2 CMake modules.
+
+For a more minimal configure step, disable optional asset downloads as needed:
+
+```sh
+cmake -DCMAKE_BUILD_TYPE=Release -DDISABLE_DEFAULT_SCENE=ON -DDISABLE_MESH_ASSETS_DOWNLOAD=ON -S . -B build
+cmake --build build --config Release
+```
+
 ## Documentation
 
 Please consult the [documentation](https://nvpro-samples.github.io/vk_gaussian_splatting/) to browse:
